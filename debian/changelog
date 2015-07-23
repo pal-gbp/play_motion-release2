@@ -1,0 +1,101 @@
+ros-indigo-play-motion (0.4.1-0saucy) saucy; urgency=high
+
+  * Migrate to format2
+  * remove module file
+  * Add missing configuration for depender projects
+  * Refactor argument names to convention
+  * Add function alternatives where NodeHandle defaults to one of play_motion
+  * log error when core is 0
+  * Add default values and units to sample config.
+  * Add new optional config parameter.
+    Add new parameter to configure the minimum approach time to use when
+    skip_planning = true.
+    If we time-parameterize trajectories using MoveIt's built-in methods, we'd
+    be able to get rid of this additional parameter, but in the meantime, it
+    addresses an important issue.
+  * Contributors: Adolfo Rodriguez Tsouroukdissian, Bence Magyar, Daniel Pinyol, Víctor López
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Wed, 22 Jul 2015 22:00:00 -0000
+
+ros-indigo-play-motion (0.4.0-0saucy) saucy; urgency=high
+
+  * Add install() rule for headers
+  * Fetch time_from_start as a double. (#28 <https://github.com/pal-robotics/play_motion/issues/28>)
+  * MoveIt! integration (#36 <https://github.com/pal-robotics/play_motion/issues/36>)
+  * Allow to disable motion planning altogether.
+  * Silence compiler warnings.
+  * Add move_joint script (#33 <https://github.com/pal-robotics/play_motion/issues/33>)
+  * Don't compute approach time if specified.
+  * Handle first waypoints with time_from_start == 0.
+  * Add service call to query available motions.
+  * Isolate move_group async spinner from rest of node (#31 <https://github.com/pal-robotics/play_motion/issues/31>)
+  * Make planning optional. Deprecate reach_time.
+  * First prototype of motion planning support.
+  * Refactor how controllers are checked.
+  * Allow cast from int to double in xmlrpc helpers (#28 <https://github.com/pal-robotics/play_motion/issues/28>)
+  * Contributors: Adolfo Rodriguez Tsouroukdissian, Paul Mathieu
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Tue, 22 Apr 2014 22:00:00 -0000
+
+ros-indigo-play-motion (0.3.5-0saucy) saucy; urgency=high
+
+  * Harmonize doxygen tags
+  * Fix crash with empty motion names (#20 <https://github.com/pal-robotics/play_motion/issues/20>).
+  * Minor doc fix.
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Mon, 24 Feb 2014 23:00:00 -0000
+
+ros-indigo-play-motion (0.3.4-0saucy) saucy; urgency=high
+
+  * catch and show unexpected exceptions in main()
+  * Refactor populateVelocities. Document it.
+  * Propagate controller action state to internal API
+    Fixes #15 <https://github.com/pal-robotics/play_motion/issues/15>
+  * Refactor some stuff in play_motion.cpp
+  * Refactor and document MoveJointGroup
+  * Replace test_depend with build_depend
+  * Use existing msg types for traj points. Refs #4 <https://github.com/pal-robotics/play_motion/issues/4>.
+    - Move from the custom structs to trajectory_msgs types.
+    - Waypoints can now have accelerations.
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Sun, 23 Feb 2014 23:00:00 -0000
+
+ros-indigo-play-motion (0.3.3-0saucy) saucy; urgency=high
+
+  * Fix dependencies (add sensor_msgs)
+  * Add install target for play_motion_helpers lib
+  * take messages out into new package play_motion_msgs
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Wed, 19 Feb 2014 23:00:00 -0000
+
+ros-indigo-play-motion (0.3.2-0saucy) saucy; urgency=high
+
+  * Refactor and add a datatypes.h
+  * Remove unneeded import
+  * Fix bug: calling the motion callback more than once
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Tue, 04 Feb 2014 23:00:00 -0000
+
+ros-indigo-play-motion (0.3.1-0saucy) saucy; urgency=high
+
+  * Populate velocity data
+    
+      * Velocities are populated only for motions that don't specify velocities for at least one waypoint.
+      * Good compromise: Smoother than Fritsch-Butland, while still allowing to hold position in equal consecutive waypoints (one of the heuristics we wanted).
+    
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Tue, 03 Dec 2013 23:00:00 -0000
+
+ros-indigo-play-motion (0.3.0-0saucy) saucy; urgency=high
+
+  * Add include dirs to unit tests
+  * Document IsAlreadyThere service
+  * Add service IsAlreadyThere
+  * Changed error codes to follow ROS standard. SUCCEEDED should be 1 (so we don't have 0 as a real error code as it's a default value).
+  * Return SUCCEEDED when everything went fine
+  * use CATKIN_ENABLE_TESTING in CMakeLists.txt
+  * catkin-only version now
+
+ -- Bence Magyar <bence.magyar@pal-robotics.com>  Wed, 27 Nov 2013 23:00:00 -0000
+
+

@@ -1,0 +1,12 @@
+Source: ros-indigo-play-motion
+Section: misc
+Priority: extra
+Maintainer: Bence Magyar <bence.magyar@pal-robotics.com>
+Build-Depends: debhelper (>= 9.0.0), ros-indigo-actionlib, ros-indigo-catkin, ros-indigo-control-msgs, ros-indigo-controller-manager, ros-indigo-controller-manager-msgs, ros-indigo-joint-state-controller, ros-indigo-joint-trajectory-controller, ros-indigo-moveit-ros-planning-interface, ros-indigo-play-motion-msgs, ros-indigo-robot-state-publisher, ros-indigo-roscpp, ros-indigo-rostest, ros-indigo-sensor-msgs
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-indigo-play-motion
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-indigo-actionlib, ros-indigo-control-msgs, ros-indigo-controller-manager-msgs, ros-indigo-moveit-ros-planning-interface, ros-indigo-play-motion-msgs, ros-indigo-roscpp, ros-indigo-sensor-msgs
+Description: Plays a pre-recorded motion on a robot
