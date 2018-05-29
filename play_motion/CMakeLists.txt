@@ -1,14 +1,19 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(play_motion)
 
-find_package(catkin REQUIRED COMPONENTS roscpp play_motion_msgs actionlib moveit_ros_planning_interface sensor_msgs)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+
+find_package(catkin REQUIRED COMPONENTS actionlib control_msgs controller_manager_msgs
+  play_motion_msgs moveit_ros_planning_interface roscpp sensor_msgs
+  diagnostic_msgs diagnostic_updater)
 find_package(Boost REQUIRED COMPONENTS thread)
 
 catkin_python_setup()
 
 catkin_package(INCLUDE_DIRS include
                LIBRARIES play_motion_helpers
-               CATKIN_DEPENDS roscpp  play_motion_msgs actionlib moveit_ros_planning_interface sensor_msgs)
+               CATKIN_DEPENDS actionlib control_msgs controller_manager_msgs
+               play_motion_msgs moveit_ros_planning_interface roscpp sensor_msgs)
 
 
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -27,17 +32,25 @@ add_executable(play_motion
 target_link_libraries(play_motion play_motion_helpers ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(play_motion play_motion_msgs_generate_messages_cpp)
 
+add_executable(run_motion src/run_motion_node.cpp)
+target_link_libraries(run_motion ${catkin_LIBRARIES})
+add_dependencies(run_motion ${catkin_EXPORTED_TARGETS})
+
 install(TARGETS play_motion
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   )
 
-install(TARGETS play_motion_helpers
+install(TARGETS play_motion_helpers 
     DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+
+install(TARGETS run_motion
+        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 install (PROGRAMS scripts/is_already_there.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-install(PROGRAMS scripts/move_joint
+install(PROGRAMS scripts/move_joint scripts/run_motion_python_node.py
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY include/
@@ -48,12 +61,14 @@ install(DIRECTORY include/
 # tests
 #######
 if(CATKIN_ENABLE_TESTING)
-  find_package(catkin COMPONENTS rostest actionlib controller_manager joint_trajectory_controller)
+  find_package(rostest REQUIRED)
+  find_package(controller_manager REQUIRED)
 
-  include_directories(include ${catkin_INCLUDE_DIRS})
+  include_directories(SYSTEM ${controller_manager_INCLUDE_DIRS}
+    ${joint_trajectory_controller_INCLUDE_DIRS})
 
   add_executable(pm_rrbot test/rrbot.cpp)
-  target_link_libraries(pm_rrbot ${catkin_LIBRARIES})
+  target_link_libraries(pm_rrbot ${catkin_LIBRARIES} ${controller_manager_LIBRARIES})
 
   add_dependencies(tests pm_rrbot)
 
